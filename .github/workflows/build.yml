@@ -37,21 +37,17 @@ jobs:
 
       - name: Install dependencies and neovim
         run: |
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
+          sudo apt-get update -y && \
           sudo apt-get upgrade -y && \
           sudo apt-get dist-upgrade -y && \
-          sudo apt-get -qq install -y build-essential software-properties-common\
+          sudo apt-get -qq install -y gcc-9 g++-9 build-essential software-properties-common\
             curl gnupg ca-certificates git cmake \
             libssl-dev pkg-config libfreetype6-dev libasound2-dev \
             libexpat1-dev libxcb-composite0-dev libbz2-dev freeglut3-dev \
             libxi-dev appstream \
-            neovim && \
-          sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
-          sudo apt-get update -y && \
-          sudo apt-get install gcc-9 g++-9 -y && \
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-9 && \
-          sudo update-alternatives --config gcc
-          select gcc-9
-
+            neovim
+            
       - name: Test
         env:
           RUST_BACKTRACE: full
